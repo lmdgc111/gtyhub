@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>GTY · 硬核玩家· 战利品陈列室</title>
+    <!-- Google Fonts + Font Awesome 6 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0b0c10;
+            color: #e5e9f0;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        /* 自定义滚动条 - 游戏暗黑风 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1f2329;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #5a4c8c;
+            border-radius: 12px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8b6fc9;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            font-size: 2.3rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 3rem;
+            text-align: center;
+            background: linear-gradient(135deg, #f0b27a, #e06c75);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* 导航栏毛玻璃 战术风格 */
+        .navbar {
+            position: sticky;
+            top: 0;
+            background: rgba(11, 12, 16, 0.85);
+            backdrop-filter: blur(16px);
+            z-index: 100;
+            border-bottom: 1px solid rgba(224, 108, 117, 0.3);
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(120deg, #f0b27a, #e06c75);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.02em;
+        }
+        .logo i {
+            background: none;
+            color: #e06c75;
+            margin-right: 6px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 600;
+            color: #cbd5e6;
+            transition: 0.2s ease;
+            font-size: 1rem;
+        }
+
+        .nav-links a:hover {
+            color: #e06c75;
+            text-shadow: 0 0 5px rgba(224,108,117,0.5);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.8rem;
+            border-radius: 2rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            background: #e06c75;
+            color: #0b0c10;
+            box-shadow: 0 8px 18px rgba(224,108,117,0.3);
+        }
+
+        .btn-primary:hover {
+            background: #cf5a63;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px -8px rgba(224,108,117,0.5);
+        }
+
+        .btn-outline {
+            border: 1.5px solid #e06c75;
+            background: transparent;
+            color: #e06c75;
+        }
+
+        .btn-outline:hover {
+            background: #e06c75;
+            color: #0b0c10;
+            transform: translateY(-2px);
+        }
+
+        /* Hero 战区 */
+        .hero {
+            padding: 4rem 0 5rem 0;
+        }
+
+        .hero-grid {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+
+        .hero-content {
+            flex: 1;
+            min-width: 280px;
+        }
+
+        .hero-badge {
+            background: rgba(224,108,117,0.2);
+            color: #f0b27a;
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(224,108,117,0.4);
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.2rem;
+        }
+
+        .hero-highlight {
+            background: linear-gradient(145deg, #f0b27a, #e06c75);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .hero-desc {
+            font-size: 1.2rem;
+            color: #a5b3cf;
+            max-width: 520px;
+            margin-bottom: 2rem;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .stat {
+            background: #1a1d25;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 600;
+            border-left: 3px solid #e06c75;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-avatar {
+            flex: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .avatar-card {
+            background: linear-gradient(145deg, #1e222c, #14181f);
+            border-radius: 3rem;
+            padding: 1.2rem;
+            box-shadow: 0 25px 40px -12px rgba(224,108,117,0.2);
+            border: 1px solid rgba(240,178,122,0.3);
+        }
+
+        .avatar-icon {
+            font-size: 10rem;
+            color: #e06c75;
+            filter: drop-shadow(0 0 12px rgba(224,108,117,0.5));
+        }
+
+        /* 关于区 游戏生涯 */
+        .about-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3rem;
+            align-items: center;
+        }
+        .about-text {
+            flex: 1.4;
+        }
+        .about-text p {
+            font-size: 1.1rem;
+            color: #cbd5e6;
+            margin-bottom: 1.5rem;
+        }
+        .info-list {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+        .info-list li {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1rem;
+        }
+        .info-list i {
+            width: 28px;
+            color: #f0b27a;
+        }
+
+        .skill-tag-cloud {
+            flex: 1;
+            background: #14181f;
+            padding: 2rem;
+            border-radius: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+            border: 1px solid #2a2f3a;
+        }
+        .skill-tag-cloud h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.8rem;
+            color: #f0b27a;
+        }
+        .skill-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+        .skill-tag {
+            background: #1e222d;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #e5e9f0;
+            transition: all 0.2s;
+            border: 1px solid #373e4d;
+        }
+        .skill-tag:hover {
+            border-color: #e06c75;
+            transform: translateY(-2px);
+            background: #2a2f3e;
+            color: #f0b27a;
+        }
+
+        /* 项目卡片 —— 游戏战利品 */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+        .project-card {
+            background: #12161c;
+            border-radius: 1.8rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+            border: 1px solid #2a2f3a;
+        }
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 35px -12px rgba(224,108,117,0.25);
+            border-color: #e06c75;
+        }
+        .project-img {
+            background: linear-gradient(145deg, #1e2530, #10141b);
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: #f0b27a;
+        }
+        .project-info {
+            padding: 1.8rem;
+        }
+        .project-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.6rem;
+        }
+        .project-info p {
+            color: #9aa9c1;
+            margin-bottom: 1.2rem;
+        }
+        .project-tags {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+        .project-tags span {
+            background: #1f2937;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #e5e9f0;
+        }
+        .project-link {
+            color: #e06c75;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .project-link i {
+            transition: transform 0.2s;
+        }
+        .project-link:hover i {
+            transform: translateX(5px);
+        }
+
+        /* 联系表单 战术通信 */
+        .contact-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3rem;
+            background: #11151c;
+            border-radius: 2.5rem;
+            padding: 2.5rem;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid #2e3542;
+        }
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        .contact-detail {
+            margin: 2rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .contact-detail a, .contact-detail span {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1rem;
+            color: #cbd5e6;
+            text-decoration: none;
+        }
+        .social-links {
+            display: flex;
+            gap: 1.4rem;
+            margin-top: 1.5rem;
+        }
+        .social-links a {
+            background: #1a1f29;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f0b27a;
+            font-size: 1.4rem;
+            transition: all 0.2s;
+        }
+        .social-links a:hover {
+            background: #e06c75;
+            color: #0b0c10;
+            transform: translateY(-4px);
+        }
+        .contact-form .input-group input, .contact-form .input-group textarea {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            border: 1px solid #2e3542;
+            border-radius: 1.5rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            background: #0e1118;
+            color: #e5e9f0;
+        }
+        .contact-form .input-group input:focus, .contact-form .input-group textarea:focus {
+            outline: none;
+            border-color: #e06c75;
+            box-shadow: 0 0 0 3px rgba(224,108,117,0.2);
+        }
+        .contact-form button {
+            width: 100%;
+            background: #e06c75;
+            color: #0b0c10;
+            padding: 1rem;
+            border: none;
+            border-radius: 2rem;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .contact-form button:hover {
+            background: #cf5a63;
+            transform: scale(0.98);
+        }
+
+        footer {
+            background: #090c10;
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid #1f232b;
+            color: #7b8aa3;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #e06c75;
+            color: #0b0c10;
+            width: 48px;
+            height: 48px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 1.3rem;
+            box-shadow: 0 10px 20px rgba(224,108,117,0.4);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s;
+            z-index: 99;
+        }
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .back-to-top:hover {
+            background: #f0b27a;
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+            section {
+                padding: 3.5rem 0;
+            }
+            .hero-content h1 {
+                font-size: 2.4rem;
+            }
+            .avatar-icon {
+                font-size: 7rem;
+            }
+            .section-title {
+                font-size: 1.9rem;
+            }
+            .hero-stats {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="container nav-container">
+        <div class="logo"><i class="fas fa-skull"></i> GTY · 战利品殿堂</div>
+        <ul class="nav-links">
+            <li><a href="#home">军械库</a></li>
+            <li><a href="#about">老兵档案</a></li>
+            <li><a href="#projects">高光时刻</a></li>
+            <li><a href="#contact">无线电联络</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main>
+    <!-- HERO 游戏战区 -->
+    <section id="home" class="hero">
+        <div class="container hero-grid">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-bolt"></i> 超强三角洲跑刀 · 十年方舟老兵
+                </div>
+                <h1>
+                    GTY · <span class="hero-highlight">硬核三栖战神</span>
+                </h1>
+                <p class="hero-desc">
+                    三角洲特种跑刀手 | 罗德岛战术指挥 | ZMD专业拉线大师<br>
+                    从“星露谷”农场到“黎明杀机”逃生门，没有我征服不了的战场。
+                </p>
+                <div class="hero-stats">
+                    <div class="stat"><i class="fas fa-trophy"></i> 三角洲全境刀通</div>
+                    <div class="stat"><i class="fas fa-dragon"></i> 危机合约32层</div>
+                    <div class="stat"><i class="fas fa-ghost"></i> 杀机红段屠皇</div>
+                </div>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn btn-primary"><i class="fas fa-gamepad"></i> 战果展示</a>
+                    <a href="#contact" class="btn btn-outline"><i class="fas fa-radio"></i> 组队邀请</a>
+                </div>
+            </div>
+            <div class="hero-avatar">
+                <div class="avatar-card">
+                    <i class="fas fa-user-ninja avatar-icon"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 关于 + 核心能力（游戏池） -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">🪖 老兵档案 · 全能游戏库</h2>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>⚡ <strong>GTY</strong> —— 十年《明日方舟》刀客塔，全六星专三，危机合约登顶记录保持者。同时是《三角洲行动》极限跑刀流开创者，单排突破传说段位。更精通《黎明杀机》走位博弈，人皇/屠皇双修。</p>
+                    <p>🎮 “ZMD专业拉线” 王牌技师，终末地测试服先驱，星露谷酿酒大亨，LOL峡谷全能摇摆人。没有游戏能难得倒我，只有还没更新的DLC。</p>
+                    <ul class="info-list">
+                        <li><i class="fas fa-map-marked-alt"></i> 主战场：三角洲 · 罗德岛 · 迷雾森林</li>
+                        <li><i class="fas fa-clock"></i> 总游戏时长 > 20000小时 | 全平台制霸</li>
+                        <li><i class="fas fa-tachometer-alt"></i> 风格：莽夫+艺术 | 直播/攻略/战队指导</li>
+                    </ul>
+                </div>
+                <div class="skill-tag-cloud">
+                    <h3><i class="fas fa-crosshairs"></i> 核心能力 · 精通领域</h3>
+                    <div class="skill-group">
+                        <span class="skill-tag">三角洲行动·跑刀美学</span>
+                        <span class="skill-tag">英雄联盟·全能摇摆</span>
+                        <span class="skill-tag">明日方舟·高难攻略</span>
+                        <span class="skill-tag">黎明杀机·双阵营红段</span>
+                        <span class="skill-tag">星露谷物语·经济狂魔</span>
+                        <span class="skill-tag">终末地·技术测试硬核</span>
+                        <span class="skill-tag">ZMD专业拉线</span>
+                        <span class="skill-tag">战术指挥/地图理解</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 项目区块：游戏高光 / 成就展示 -->
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title">🏆 巅峰战绩 · 不朽传说</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-img">
+                        <i class="fas fa-gun fa-5x"></i>
+                    </div>
+                    <div class="project-info">
+                        <h3>三角洲：零伤亡跑刀传奇</h3>
+                        <p>单人全地图刀通+无伤撤离集锦，战术道具零消耗，全网播放量破百万。代表作“一刀入魂·黑鹰坠落”。</p>
+                        <div class="project-tags">
+                            <span>跑刀流</span><span>身法巅峰</span><span>战术渗透</span>
+                        </div>
+                        <a href="#" class="project-link">观看高光录像 <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img">
+                        <i class="fas fa-dice-d6 fa-5x"></i>
+                    </div>
+                    <div class="project-info">
+                        <h3>明日方舟：光谱行动登顶</h3>
+                        <p>旧合约32级全网首杀，全分队少人解。从零打造“方舟战术百科”，帮助上万博士突破高难。</p>
+                        <div class="project-tags">
+                            <span>危机合约</span><span>少人作业</span><span>攻略组</span>
+                        </div>
+                        <a href="#" class="project-link">查看攻略合集 <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img">
+                        <i class="fas fa-tree fa-5x"></i>
+                    </div>
+                    <div class="project-info">
+                        <h3>星露谷+黎明杀机 跨界大师</h3>
+                        <p>星露谷三年净利润过亿，同时杀机单边最高人皇段位榜。全网首个“种田+恐怖游戏”双料导师。</p>
+                        <div class="project-tags">
+                            <span>种田经济学</span><span>走位博弈</span><span>心理战</span>
+                        </div>
+                        <a href="#" class="project-link">直播精华回放 <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img">
+                        <i class="fas fa-plug fa-5x"></i>
+                    </div>
+                    <div class="project-info">
+                        <h3>ZMD专业拉线 & 终末地前瞻</h3>
+                        <p>终末地内测核心玩家，开发出高效拉线/基建布局，编写《终末地超实用手册》。战队指定战术教官。</p>
+                        <div class="project-tags">
+                            <span>ZMD拉线</span><span>基建狂魔</span><span>内测攻略</span>
+                        </div>
+                        <a href="#" class="project-link">获取战术手册 <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系区 · 游戏开黑邀请 -->
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">📡 无线电呼叫 · 组队/教学</h2>
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <h3><i class="fas fa-headset"></i> 组队·切磋·上车</h3>
+                    <p>想学三角洲跑刀？方舟合约作业？还是开黑黎明杀机/英雄联盟？直接私信我，硬核玩家从不废话。</p>
+                    <div class="contact-detail">
+                        <a href="mailto:gty@hardcoregamer.com"><i class="fas fa-envelope"></i> gty@hardcoregamer.com</a>
+                        <span><i class="fab fa-discord"></i> GTY#2287 (Discord)</span>
+                        <span><i class="fab fa-steam"></i> Steam ID: 超强三角洲跑刀</span>
+                        <span><i class="fas fa-qrcode"></i> 战网/拳头直连</span>
+                    </div>
+                    <div class="social-links">
+                        <a href="#" aria-label="Twitch"><i class="fab fa-twitch"></i></a>
+                        <a href="#" aria-label="Bilibili"><i class="fab fa-bilibili"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form id="gaming-contact-form">
+                        <div class="input-group">
+                            <input type="text" id="playerName" placeholder="你的游戏ID / 昵称 *" required>
+                        </div>
+                        <div class="input-group">
+                            <input type="email" id="playerEmail" placeholder="常用邮箱 *" required>
+                        </div>
+                        <div class="input-group">
+                            <textarea rows="4" id="requestMsg" placeholder="想学什么套路？ 组队开黑？ 战术咨询？ 尽管说..."></textarea>
+                        </div>
+                        <button type="submit" id="submitBtn"><i class="fas fa-paper-plane"></i> 发送信号弹</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>© 2025 GTY · 超强三角洲跑刀 | 十年方舟老兵 | 战痕即是勋章</p>
+</footer>
+
+<a href="#home" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-chevron-up"></i>
+</a>
+
+<script>
+    // 返回顶部按钮
+    const backBtn = document.getElementById('backToTopBtn');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 400) {
+            backBtn.classList.add('show');
+        } else {
+            backBtn.classList.remove('show');
+        }
+    });
+
+    // 平滑跳转 (所有锚点)
+    document.querySelectorAll('.nav-links a, .back-to-top, .hero-buttons .btn').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href && href.startsWith('#')) {
+                e.preventDefault();
+                const targetId = href.substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+        });
+    });
+
+    // 游戏风表单提交模拟
+    const contactForm = document.getElementById('gaming-contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('playerName').value.trim();
+            const email = document.getElementById('playerEmail').value.trim();
+            const msg = document.getElementById('requestMsg').value.trim();
+
+            if (!name || !email) {
+                alert('⚠️ 至少留下你的游戏ID和邮箱，才能一起开黑！');
+                return;
+            }
+            if (!email.includes('@') || !email.includes('.')) {
+                alert('📡 邮箱地址无效，指挥部无法回传信号');
+                return;
+            }
+            alert(`📢 呼叫成功！${name}，GTY已收到你的组队请求。\n回复会发送至 ${email}\n消息概要：${msg ? msg.slice(0, 50) : '一起战斗！'}…`);
+            contactForm.reset();
+        });
+    }
+
+    // 动态年份
+    const footerPara = document.querySelector('footer p');
+    if (footerPara) {
+        const currentYear = new Date().getFullYear();
+        footerPara.innerHTML = footerPara.innerHTML.replace('2025', currentYear);
+    }
+</script>
+</body>
+</html>
